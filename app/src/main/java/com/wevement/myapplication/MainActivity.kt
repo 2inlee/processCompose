@@ -24,31 +24,27 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val viewModel = viewModel() as MainViewModel
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-            ) {
-                Text(
-                    viewModel.data.value,
-                    fontSize = 30.sp,
-                )
-                Button(onClick = {
-                    viewModel.changeData()
-                }) {
-                    Text("변경")
-                }
-            }
+            HomeScreen()
         }
     }
 }
 
-class MainViewModel : ViewModel() {
-    private val _data = mutableStateOf("hello")
-    val data:State<String> = _data
-
-    fun changeData() {
-        _data.value = "world"
+@Composable
+fun HomeScreen(viewModel: MainViewModel = viewModel()) {
+    var (text, setText) = remember{
+        mutableStateOf("Hello World!")
     }
+    Column (){
+        Text(text = "Hello World!")
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Click me!")
+        }
+        TextField(value = text, onValueChange = setText)
+    }
+}
+
+class MainViewModel : ViewModel() {
+    //뮤터블 스테이트오브는 익기 쓰기가 모두 가능 까보면 오버라이드 var로 되어있음 변수가 두개인데 각각 게터 세터로 되어있음
+    private val _value = mutableStateOf("Hello World!")
+    val value: State<String> = _value // 스테이트는 읽기만 가능 까보면 val로 선언되어있어서 변경불가
 }
