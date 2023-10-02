@@ -48,6 +48,7 @@ class MainActivity : ComponentActivity() {
                     )
                     Button(onClick = {
                         scope.launch {
+                            ketboardController?.hide()
                             scaffoldState.snackbarHostState.showSnackbar("Hello, $text!")
                         }
                     }) {
